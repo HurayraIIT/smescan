@@ -12,3 +12,6 @@ Activate the virtual environment.
 
 ```. venv/bin/activate```
 
+Step 2: Create a file named requirements.txt and add Flask as a requirement.
+
+```Flask==2.0.2```
