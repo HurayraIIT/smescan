@@ -4,6 +4,10 @@ A simple web application built using python flask. It can be used to scan SMEVai
 
 ## Development Process
 
+Step 0: Clone this repository and remove the venv folder.
+
+```git clone git@github.com:HurayraIIT/smescan.git```
+
 Step 1: Create a virtual environment
 
 ```python3 -m venv venv```
@@ -12,20 +16,16 @@ Activate the virtual environment.
 
 ```. venv/bin/activate```
 
-Step 2: Create a file named requirements.txt and add Flask as a requirement.
-
-```Flask==2.0.2```
-
-Step 3: Install the equirements
+Step 2: Install the equirements
 
 ```python3 -m pip install -r requirements.txt```
 
-Step 4: Create a main.py file. The app is now ready to view on a browser. Just run this command from the terminal:
+Step 3: Run the main.py file from your terminal.
 
 ```python3 main.py```
 
-Step 4: Now I added a new route and celsius to fahrenheit converter code. Visiting this url will trigger this:
+Step 4: Now the webserver should start on your localhost
 
-```http://127.0.0.1:8080/98.4```
+```http://127.0.0.1:8080/```
 
-Change the value and notice the output.
+Enjoy!
