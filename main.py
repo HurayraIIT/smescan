@@ -5,8 +5,8 @@ app = Flask(__name__)
 @app.route("/")
 def index():
     return """
-            <form action="" method="get">
-                <input type="text" name="celsius">
+            <form action="" method="get" autocomplete="on">
+                <input type="text" name="celsius" placeholder="98.7" maxlength="50" autofocus  required>
                 <input type="submit" value="convert">
             </form>
 """
