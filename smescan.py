@@ -10,6 +10,11 @@ USERNAME = 'wpdabh+year22sa1@gmail.com'
 PASSWORD = 'pass1234'
 
 
+# links = FindLinksFromWebpage(URL)
+all_links = []
+tested_links = []
+
+
 # Check If a string is a valid URL
 def is_valid(url):
     parsed = urlparse(url)
@@ -47,12 +52,8 @@ def login(url, username, password):
     return s
 
 
-# Login to the website
-session = login(URL, USERNAME, PASSWORD)
-
-
 # Find all links from a webpage
-def FindLinksFromWebpage(url):
+def FindLinksFromWebpage(session, url):
     r = session.get(url)
     if r.status_code >= 400:
         print(f'[x] Error: Code {r.status_code} on URL - {url}')
@@ -68,23 +69,9 @@ def FindLinksFromWebpage(url):
     
     return links
 
-# links = FindLinksFromWebpage(URL)
-all_links = []
-tested_links = []
-
-# for link in links:
-#     if link in tested_links:
-#         continue
-#     for l in FindLinksFromWebpage(link):
-#         if l not in tested_links:
-#             tested_links.append(l)
-#         if l not in all_links:
-#             all_links.append(l)
-
-
 
 # Recursively Extract all links
-def extract_links(link):
+def extract_links(session, link):
     
     if link not in all_links:
         all_links.append(link)
@@ -94,17 +81,31 @@ def extract_links(link):
     tested_links.append(link)
     # print(f'[+] Tested - {link}')
     
-    for l in FindLinksFromWebpage(link):
-        extract_links(l)
-
-extract_links(URL)
+    for l in FindLinksFromWebpage(session, link):
+        extract_links(session, l)
 
 
-# Print The links and their Status Codes
-for index, link in enumerate(sorted(all_links)):
-    res = session.get(link)
+# This method will act as the main method here
+def RunSmeScan(_URL, _USERNAME, _PASSWORD):
     
-    if index<10:
-        print(f'0{index} - {res.status_code} > {link}')
-    else:
-        print(f'{index} - {res.status_code} > {link}')
+    URL = _URL
+    USERNAME = _USERNAME
+    PASSWORD = _PASSWORD
+    result = "Scan Result:<br>"
+    
+    # Login to the website
+    session = login(URL, USERNAME, PASSWORD)
+    
+    extract_links(session, URL)
+    
+    # Print The links and their Status Codes
+    for index, link in enumerate(sorted(all_links)):
+        res = session.get(link)
+        
+        if index<10:
+            result += f'0{index} - <b>{res.status_code}</b> > {link}<br>'
+        else:
+            result += f'{index} - <b>{res.status_code}</b> > {link}<br>'
+    
+    return result
+    
