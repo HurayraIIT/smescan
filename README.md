@@ -15,3 +15,8 @@ Activate the virtual environment.
 Step 2: Create a file named requirements.txt and add Flask as a requirement.
 
 ```Flask==2.0.2```
+
+Step 3: Install the equirements
+
+```python3 -m pip install -r requirements.txt```
+
