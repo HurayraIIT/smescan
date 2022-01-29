@@ -1,5 +1,5 @@
 from flask import Flask
-from flask import request
+from flask import request, escape
 
 
 # Initialize a flask app
@@ -9,7 +9,7 @@ app = Flask(__name__)
 # Decorator for intercepting requests
 @app.route("/")
 def index():
-    celsius = request.args.get("celsius", "")
+    celsius = str(escape(request.args.get("celsius", "")))
     return (
         """
             <form action="" method="get" autocomplete="on">
