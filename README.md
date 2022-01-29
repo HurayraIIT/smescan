@@ -23,3 +23,9 @@ Step 3: Install the equirements
 Step 4: Create a main.py file. The app is now ready to view on a browser. Just run this command from the terminal:
 
 ```python3 main.py```
+
+Step 4: Now I added a new route and celsius to fahrenheit converter code. Visiting this url will trigger this:
+
+```http://127.0.0.1:8080/98.4```
+
+Change the value and notice the output.
