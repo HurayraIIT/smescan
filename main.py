@@ -10,6 +10,10 @@ app = Flask(__name__)
 @app.route("/")
 def index():
     celsius = str(escape(request.args.get("celsius", "")))
+    if celsius:
+        fahrenheit = fahrenheit_from(celsius)
+    else:
+        fahrenheit = ""
     return (
         """
             <form action="" method="get" autocomplete="on">
@@ -17,12 +21,11 @@ def index():
                 <input type="submit" value="convert">
             </form>
         """
-        + celsius
+        + "Fahrenheit: "
+        + fahrenheit
     )
 
 
-# Another Decorator
-@app.route("/<celsius>")
 def fahrenheit_from(celsius):
     try:
         fahrenheit = float(celsius) * 9 / 5 + 32
