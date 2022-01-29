@@ -20,3 +20,6 @@ Step 3: Install the equirements
 
 ```python3 -m pip install -r requirements.txt```
 
+Step 4: Create a main.py file. The app is now ready to view on a browser. Just run this command from the terminal:
+
+```python3 main.py```
