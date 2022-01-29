@@ -4,7 +4,12 @@ app = Flask(__name__)
 
 @app.route("/")
 def index():
-    return "Hello world!"
+    return """
+            <form action="" method="get">
+                <input type="text" name="celsius">
+                <input type="submit" value="convert">
+            </form>
+"""
 
 @app.route("/<celsius>")
 def fahrenheit_from(celsius):
