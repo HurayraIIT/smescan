@@ -1,16 +1,27 @@
 from flask import Flask
+from flask import request
 
+
+# Initialize a flask app
 app = Flask(__name__)
 
+
+# Decorator for intercepting requests
 @app.route("/")
 def index():
-    return """
+    celsius = request.args.get("celsius", "")
+    return (
+        """
             <form action="" method="get" autocomplete="on">
                 <input type="text" name="celsius" placeholder="98.7" maxlength="50" autofocus  required>
                 <input type="submit" value="convert">
             </form>
-"""
+        """
+        + celsius
+    )
 
+
+# Another Decorator
 @app.route("/<celsius>")
 def fahrenheit_from(celsius):
     try:
@@ -20,5 +31,7 @@ def fahrenheit_from(celsius):
     except ValueError:
         return "Invalid Input: Please Enter a number"
 
+
+# Main function
 if __name__ == "__main__":
     app.run(host="127.0.0.1", port=8080, debug=True)
