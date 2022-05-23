@@ -1,12 +1,16 @@
-from cgi import test
+# from cgi import test
 import requests
 import re
 from bs4 import BeautifulSoup
 from urllib.parse import urlparse
 
 
-URL = 'https://app.smevai.com'
-USERNAME = 'wpdabh+year22sa1@gmail.com'
+APP_URL = 'https://app.smevai.com'
+TESTING_URL = 'https://testing.smevai.com'
+
+SERVICE_USERNAME = 'wpdabh+year22sa1@gmail.com'
+TRADING_USERNAME = 'wpdabh+year22ta1@gmail.com'
+
 PASSWORD = 'pass1234'
 
 
@@ -17,6 +21,8 @@ tested_links = []
 
 # Check If a string is a valid URL
 def is_valid(url):
+    if url == None or ".smevai.com" not in url:
+      return False
     parsed = urlparse(url)
     return bool(parsed.netloc) and bool(parsed.scheme)
 
@@ -47,7 +53,7 @@ def login(url, username, password):
         cookies=cookies
     )
     
-    # print(res.status_code)
+    print(f"Logged in? {res.status_code}")
     
     return s
 
@@ -73,6 +79,7 @@ def FindLinksFromWebpage(session, url):
 # Recursively Extract all links
 def extract_links(session, link):
     
+  
     if link not in all_links:
         all_links.append(link)
     if link in tested_links:
@@ -91,21 +98,52 @@ def RunSmeScan(_URL, _USERNAME, _PASSWORD):
     URL = _URL
     USERNAME = _USERNAME
     PASSWORD = _PASSWORD
-    result = "Scan Result:<br>"
+    result = ""
     
     # Login to the website
     session = login(URL, USERNAME, PASSWORD)
     
     extract_links(session, URL)
-    
+    count = 0
     # Print The links and their Status Codes
     for index, link in enumerate(sorted(all_links)):
         res = session.get(link)
-        
+        count += 1
+        if res.status_code == 200:
+          
+          continue
+          
         if index<10:
-            result += f'0{index} - <b>{res.status_code}</b> > {link}<br>'
+            result += f'\n0{index} - {res.status_code} > {link}'
         else:
-            result += f'{index} - <b>{res.status_code}</b> > {link}<br>'
-    
+            result += f'\n{index} - {res.status_code} > {link}'
+    print(f"Tested {count} links.")
     return result
-    
+
+print("Checking: APP + TRADING")
+result1 = RunSmeScan(APP_URL, TRADING_USERNAME, PASSWORD)
+print(result1)
+
+all_links = []
+tested_links = []
+
+print("Checking: APP + SERVICE")
+result2 = RunSmeScan(APP_URL, SERVICE_USERNAME, PASSWORD)
+print(result2)
+
+all_links = []
+tested_links = []
+
+print("Checking: TESTING + TRADING")
+result3 = RunSmeScan(TESTING_URL, TRADING_USERNAME, PASSWORD)
+print(result3)
+
+all_links = []
+tested_links = []
+
+print("Checking: TESTING + SERVICE")
+result4 = RunSmeScan(TESTING_URL, SERVICE_USERNAME, PASSWORD)
+print(result4)
+
+all_links = []
+tested_links = []
